@@ -6,11 +6,11 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 int openFile(char* filename)
-{   
+{
     int file;
     if((file=open(filename, O_RDONLY ))<0)
     {
-		perror(filename);
+        perror(filename);
         exit(1);
     }
     else return file;
@@ -22,15 +22,15 @@ void readFile(int writeDescriptor, char* fileName)
     char img[100];
     int i;
     while ((i=read(fileDescriptor, img, sizeof(img)))>0)
-	{
-		write(writeDescriptor, img, i);
-	}
+    {
+        write(writeDescriptor, img, i);
+    }
     write(writeDescriptor, "/n", 1);
-	close(fileDescriptor);
+    close(fileDescriptor);
 }
 
 int openFork()
-{   
+{
     int pid;
     if((pid=fork())==-1)
     {
@@ -42,8 +42,8 @@ int openFork()
 
 int main (int argc, char **argv)
 {
-	int fd[2];
-    
+    int fd[2];
+
 #ifdef FIFO
     char* fifo="fifko";
     int i;
@@ -63,28 +63,27 @@ int main (int argc, char **argv)
 
 #ifdef PIPE
     int pid;
-    
-	if(pipe(fd)==-1)
+
+    if(pipe(fd)==-1)
     {
         printf("Failed to pipe!\n");
-		exit(1);
+        exit(1);
     }
 
-	pid=openFork();
-		
-	if(!pid)
-	{
-		close(0);
-		dup(fd[0]);
+    pid=openFork();
+
+    if(!pid)
+    {
+        close(0);
+        dup(fd[0]);
         close(fd[0]);
         close(fd[1]);
         execlp("display","display", NULL);
-	}
-    else 
-	{   
-        
+    }
+    else
+    {
         readFile(fd[1], argv[1]);
-	}
+    }
 #endif
-	return 0;
+    return 0;
 }
