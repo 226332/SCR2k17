@@ -39,7 +39,6 @@ void readFile(int writeDesc, char *fileName) {
     int fileDesc = openFile(fileName);
     read(fileDesc, map, fileStat.st_size);
     msync(map, fileStat.st_size, MS_SYNC);
-
     close(fileDesc);
 }
 
@@ -64,10 +63,12 @@ int main(int argc, char **argv) {
 
     if (!pid)
     {
+        #ifndef VALGRIND
         char shmWholeName[50] = "/dev/shm/";
         strcat(shmWholeName, memoryFileName);
         execl("/usr/bin/display", "/usr/bin/display", "-update", "1",
               shmWholeName, (char *)NULL);
+        #endif
     }
     else
     {
