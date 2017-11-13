@@ -1,0 +1,14 @@
+Language: Cpp
+IndentWidth: 4
+BasedOnStyle: Google
+AlignTrailingComments: true
+AllowShortFunctionsOnASingleLine: true
+AllowShortIfStatementsOnASingleLine: true
+AllowShortLoopsOnASingleLine: true
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterEnum: true
+  AfterStruct: true
+  SplitEmptyFunction: true
+  AfterControlStatement: true
+  BeforeElse: true
