@@ -12,3 +12,4 @@ BraceWrapping:
   SplitEmptyFunction: true
   AfterControlStatement: true
   BeforeElse: true
+  AfterFunction: true

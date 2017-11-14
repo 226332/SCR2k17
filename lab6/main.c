@@ -8,7 +8,8 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-int openFile(char *fileName) {
+int openFile(char *fileName)
+{
     int file;
     if ((file = open(fileName, O_RDONLY)) < 0)
     {
@@ -19,7 +20,8 @@ int openFile(char *fileName) {
         return file;
 }
 
-void readFile(int writeDesc, char *fileName) {
+void readFile(int writeDesc, char *fileName)
+{
     struct stat fileStat;
     void *map;
     if (stat(fileName, &fileStat) < 0)
@@ -42,7 +44,8 @@ void readFile(int writeDesc, char *fileName) {
     close(fileDesc);
 }
 
-int openFork() {
+int openFork()
+{
     int pid;
     if ((pid = fork()) == -1)
     {
@@ -53,7 +56,8 @@ int openFork() {
         return pid;
 }
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv)
+{
     int status = 0;
     int fd;
     char *memoryFileName = "MemoryComunism";
@@ -63,12 +67,12 @@ int main(int argc, char **argv) {
 
     if (!pid)
     {
-        #ifndef VALGRIND
+#ifndef VALGRIND
         char shmWholeName[50] = "/dev/shm/";
         strcat(shmWholeName, memoryFileName);
         execl("/usr/bin/display", "/usr/bin/display", "-update", "1",
               shmWholeName, (char *)NULL);
-        #endif
+#endif
     }
     else
     {
