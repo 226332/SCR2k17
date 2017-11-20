@@ -9,7 +9,7 @@ valgrind: main.c
 	valgrind ./Zad1.exe lena.png
 
 run: Zad1
-	./Zad1.exe lena.png
+	./Zad1.exe lena.png basketball.png
 	
 format:
 	@clang-format main.c -i

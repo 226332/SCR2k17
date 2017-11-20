@@ -20,7 +20,7 @@ int openFile(char *fileName)
         return file;
 }
 
-void readFile(int writeDesc, char *fileName)
+void mapFile(int writeDesc, char *fileName)
 {
     struct stat fileStat;
     void *map;
@@ -31,8 +31,7 @@ void readFile(int writeDesc, char *fileName)
     }
 
     ftruncate(writeDesc, fileStat.st_size);
-    map = mmap(NULL, fileStat.st_size, PROT_READ | PROT_WRITE, MAP_SHARED,
-               writeDesc, 0);
+    map = mmap(NULL, fileStat.st_size, PROT_READ | PROT_WRITE, MAP_SHARED, writeDesc, 0);
     if (map == MAP_FAILED)
     {
         perror("Error mmapping the file");
@@ -79,12 +78,13 @@ int main(int argc, char **argv)
         fd = shm_open(memoryFileName, O_RDWR | O_CREAT, 0666);
         for (i = 1; i < argc; i++)
         {
-            ftruncate(fd, 0);
-            readFile(fd, argv[i]);
+            //ftruncate(fd, 0);
+            mapFile(fd, argv[i]);
+            sleep(2); //to see every image
         }
         close(fd);
     }
-
+    shm_unlink(memoryFileName);
     wait(&status);
     return status;
 }
