@@ -78,7 +78,6 @@ int main(int argc, char **argv)
         fd = shm_open(memoryFileName, O_RDWR | O_CREAT, 0666);
         for (i = 1; i < argc; i++)
         {
-            //ftruncate(fd, 0);
             mapFile(fd, argv[i]);
             sleep(2); //to see every image
         }
